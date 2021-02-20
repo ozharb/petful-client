@@ -1,0 +1,33 @@
+.Header-Main{
+display: flex;
+justify-content: space-between;
+}
+.pets-link{
+    margin-top: 20px;
+}
+h1, a{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+a{
+    text-decoration: none;
+    
+}
+.logo{
+      transform: rotate(20deg);
+}
+    .fa-paw{
+  padding-right: 5px;
+    }
+    a:link{
+        color: black;
+    }
+    a:visited{
+        color: black;
+    }
+    a:hover{
+        color: orange;
+    }
+    a:active{
+        color: orange;
+    }
