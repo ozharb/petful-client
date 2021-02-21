@@ -15,6 +15,7 @@ class Root extends Component {
     user: ''
   };
   componentDidMount() {
+    
     Promise.all([
 
       fetch(`${config.REACT_APP_API_BASE}/people`),

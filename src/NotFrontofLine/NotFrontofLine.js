@@ -147,7 +147,11 @@ export default class NotFrontofLine extends React.Component {
   user = this.context.user
   peopleLine = this.people.length;
 
-
+  handleRestock = () => {
+    fetch(`${config.REACT_APP_API_BASE}/pets/restock`, {
+      method: 'PATCH',
+    })
+  }
   render() {
 
     const { dogs = [], cats = [] } = this.context
@@ -160,14 +164,15 @@ export default class NotFrontofLine extends React.Component {
     let catImage = currentCat.imageURL
     let catImagedesc = currentCat.description
     let peopleLine = this.people.length;
-    let petsStock = dogs.length === 1 || cats.length === 1
+    let petsStock = dogs.length <=1 || cats.length <=1
       ? true
       : false
 
     peopleLine === 0 && clearInterval(this.interval)
 
-    petsStock && clearInterval(this.interval)
-
+    // petsStock && clearInterval(this.interval)
+    petsStock && this.handleRestock()
+    
 
 
 

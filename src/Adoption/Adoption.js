@@ -137,6 +137,7 @@ export default class Adoption extends React.Component {
         console.error({ error })
       })
   }
+ 
 
   static contextType = AppContext
 
@@ -144,7 +145,7 @@ export default class Adoption extends React.Component {
   user = this.context.user
   peopleLine = this.people.length;
   placeInLine = this.people.findIndex(el => el === this.user) + 1
-
+  
   render() {
 
     const { people = [], user = '' } = this.context
