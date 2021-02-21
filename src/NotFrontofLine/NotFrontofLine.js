@@ -161,7 +161,7 @@ export default class NotFrontofLine extends React.Component {
     let petsStock = dogs.length === 1 || cats.length === 1
       ? true
       : false
-    console.log(dogs.length)
+
     peopleLine === 0 && clearInterval(this.interval)
 
     petsStock && clearInterval(this.interval)

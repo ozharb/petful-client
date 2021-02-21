@@ -17,22 +17,22 @@ export default class Adoption extends React.Component {
       params: {}
     }
   }
-  handleAdoptedpet = (petName) =>{
+  handleAdoptedpet = (petName) => {
     this.setState({
       adoptedPet: petName
     })
   }
 
-  adoptEvent = ()=>{
-   this.handlePersonOut()
- Math.floor(Math.random()*2) === 0
-    ? this.handleClickAdoptCat()
-    : this.handleClickAdoptDog()
+  adoptEvent = () => {
+    this.handlePersonOut()
+    Math.floor(Math.random() * 2) === 0
+      ? this.handleClickAdoptCat()
+      : this.handleClickAdoptDog()
   }
 
 
   handleNewPerson = () => {
-    
+
     const newPerson = [{
       person_name: 'Tony',
     },
@@ -48,7 +48,7 @@ export default class Adoption extends React.Component {
     {
       person_name: 'Sunny',
     }
-  ]
+    ]
 
     fetch(`${config.API_ENDPOINT}/people`,
       {
@@ -56,7 +56,7 @@ export default class Adoption extends React.Component {
         headers: {
           'content-type': 'application/json',
         },
-        body: JSON.stringify(newPerson[Math.floor(Math.random()*5)])
+        body: JSON.stringify(newPerson[Math.floor(Math.random() * 5)])
       })
       .then(res => {
         if (!res.ok) {
@@ -67,8 +67,8 @@ export default class Adoption extends React.Component {
       .then(data => {
 
         this.context.addPerson(data.person_name)
-        
-      
+
+
       })
       .catch(error => {
         console.error({ error })
@@ -77,8 +77,8 @@ export default class Adoption extends React.Component {
   }
 
 
-  handlePersonOut = () =>{
-    
+  handlePersonOut = () => {
+
     fetch(`${config.API_ENDPOINT}/people`, {
       method: 'DELETE',
       headers: {
@@ -96,9 +96,9 @@ export default class Adoption extends React.Component {
         console.error({ error })
       })
   }
-  
+
   handleClickAdoptDog = () => {
-   
+
 
     fetch(`${config.API_ENDPOINT}/pets/dog`, {
       method: 'DELETE',
@@ -118,7 +118,7 @@ export default class Adoption extends React.Component {
       })
   }
   handleClickAdoptCat = () => {
-   
+
 
     fetch(`${config.API_ENDPOINT}/pets/cat`, {
       method: 'DELETE',
@@ -140,59 +140,44 @@ export default class Adoption extends React.Component {
 
   static contextType = AppContext
 
-  // componentDidMount() {
- 
-  //   this.interval = setInterval(() => {
-  //   this.adoptEvent()
-  //   }, 5000)
-    
-  // }
-  // componentWillUnmount() {
-  //   clearInterval(this.interval)
-  // }
-    people  = this.context.people
-    user = this.context.user
-   peopleLine = this.people.length;
-   placeInLine = this.people.findIndex(el=> el === this.user)+1
+  people = this.context.people
+  user = this.context.user
+  peopleLine = this.people.length;
+  placeInLine = this.people.findIndex(el => el === this.user) + 1
 
   render() {
 
-    const { people = [], user = ''} = this.context
+    const { people = [], user = '' } = this.context
     const peopleLine = people.length;
-    const placeInLine = people.findIndex(el=> el === user)+1
-    
-   
-    
-   const userDisplay =  placeInLine===1 
-    ? <FrontofLine handleAdoptedpet={this.handleAdoptedpet}/>
-    : <NotFrontofLine/>
-    
-  
+    const placeInLine = people.findIndex(el => el === user) + 1
 
 
-   
- 
+
+    const userDisplay = placeInLine === 1
+      ? <FrontofLine handleAdoptedpet={this.handleAdoptedpet} />
+      : <NotFrontofLine />
+
 
     return (
-     
+
       <section className='Adoption_Main'>
-      
-      <h2>Pets Available for Adoption</h2>
-    <h3>Hi {user || 'there'}!</h3>
-   {this.state.adoptedPet && <h3>You adopted {this.state.adoptedPet}!</h3>}
-          <div className="people-queue">
-   {placeInLine > 0 && <p>Your place in line is: {placeInLine}</p>}
-    <p>People now in line: {peopleLine}</p>
-    <ol className='people__list'>
-        {people.map(person =>
-          <li key={person.id}>
-              {person}
-          
-          </li>
-        )}
-      </ol>
+
+        <h2>Pets Available for Adoption</h2>
+        <h3>Hi {user || 'there'}!</h3>
+        {this.state.adoptedPet && <h3>You adopted {this.state.adoptedPet}!</h3>}
+        <div className="people-queue">
+          {placeInLine > 0 && <p>Your place in line is: {placeInLine}</p>}
+          <p>People now in line: {peopleLine}</p>
+          <ol className='people__list'>
+            {people.map((person,i) =>
+              <li key={person + i}>
+                {person}
+
+              </li>
+            )}
+          </ol>
         </div>
-     {userDisplay}
+        {userDisplay}
       </section>
     )
   }
