@@ -1,38 +1,29 @@
 import React from 'react'
 import config from '../config'
-import FrontofLine from '../FrontofLine/FrontofLine'
-import NotFrontofLine from '../NotFrontofLine/NotFrontofLine'
-import './Adoption.css'
+import './NotFrontofLine.css'
 import AppContext from '../AppContext'
 import PropTypes from 'prop-types';
 
 
-export default class Adoption extends React.Component {
-  state = {
-    adoptedPet: ''
-  };
+export default class NotFrontofLine extends React.Component {
 
   static defaultProps = {
     match: {
       params: {}
     }
   }
-  handleAdoptedpet = (petName) =>{
-    this.setState({
-      adoptedPet: petName
-    })
-  }
 
-  adoptEvent = ()=>{
-   this.handlePersonOut()
- Math.floor(Math.random()*2) === 0
-    ? this.handleClickAdoptCat()
-    : this.handleClickAdoptDog()
+  adoptEvent = () => {
+    this.handlePersonOut()
+    this.handleNewPerson()
+    Math.floor(Math.random() * 2) === 0
+      ? this.handleClickAdoptCat()
+      : this.handleClickAdoptDog()
   }
 
 
   handleNewPerson = () => {
-    
+
     const newPerson = [{
       person_name: 'Tony',
     },
@@ -48,7 +39,7 @@ export default class Adoption extends React.Component {
     {
       person_name: 'Sunny',
     }
-  ]
+    ]
 
     fetch(`${config.API_ENDPOINT}/people`,
       {
@@ -56,7 +47,7 @@ export default class Adoption extends React.Component {
         headers: {
           'content-type': 'application/json',
         },
-        body: JSON.stringify(newPerson[Math.floor(Math.random()*5)])
+        body: JSON.stringify(newPerson[Math.floor(Math.random() * 5)])
       })
       .then(res => {
         if (!res.ok) {
@@ -67,8 +58,8 @@ export default class Adoption extends React.Component {
       .then(data => {
 
         this.context.addPerson(data.person_name)
-        
-      
+
+
       })
       .catch(error => {
         console.error({ error })
@@ -77,8 +68,8 @@ export default class Adoption extends React.Component {
   }
 
 
-  handlePersonOut = () =>{
-    
+  handlePersonOut = () => {
+
     fetch(`${config.API_ENDPOINT}/people`, {
       method: 'DELETE',
       headers: {
@@ -96,9 +87,9 @@ export default class Adoption extends React.Component {
         console.error({ error })
       })
   }
-  
+
   handleClickAdoptDog = () => {
-   
+
 
     fetch(`${config.API_ENDPOINT}/pets/dog`, {
       method: 'DELETE',
@@ -118,7 +109,7 @@ export default class Adoption extends React.Component {
       })
   }
   handleClickAdoptCat = () => {
-   
+
 
     fetch(`${config.API_ENDPOINT}/pets/cat`, {
       method: 'DELETE',
@@ -140,67 +131,77 @@ export default class Adoption extends React.Component {
 
   static contextType = AppContext
 
-  // componentDidMount() {
- 
-  //   this.interval = setInterval(() => {
-  //   this.adoptEvent()
-  //   }, 5000)
-    
-  // }
-  // componentWillUnmount() {
-  //   clearInterval(this.interval)
-  // }
-    people  = this.context.people
-    user = this.context.user
-   peopleLine = this.people.length;
-   placeInLine = this.people.findIndex(el=> el === this.user)+1
+  componentDidMount() {
+
+    this.interval = setInterval(() => {
+      this.adoptEvent()
+    }, 5000)
+
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+  people = this.context.people
+  user = this.context.user
+  peopleLine = this.people.length;
+
 
   render() {
 
-    const { people = [], user = ''} = this.context
-    const peopleLine = people.length;
-    const placeInLine = people.findIndex(el=> el === user)+1
-    
-   
-    
-   const userDisplay =  placeInLine===1 
-    ? <FrontofLine handleAdoptedpet={this.handleAdoptedpet}/>
-    : <NotFrontofLine/>
-    
-  
+    const { dogs = [], cats = [] } = this.context
+
+    let currentDog = { ...dogs[0] }
+    let dogImage = currentDog.imageURL
+    let dogImagedesc = currentDog.description
+
+    let currentCat = { ...cats[0] }
+    let catImage = currentCat.imageURL
+    let catImagedesc = currentCat.description
+    let peopleLine = this.people.length;
+    let petsStock = dogs.length === 1 || cats.length === 1
+      ? true
+      : false
+    console.log(dogs.length)
+    peopleLine === 0 && clearInterval(this.interval)
+
+    petsStock && clearInterval(this.interval)
 
 
-   
- 
+
 
     return (
-     
-      <section className='Adoption_Main'>
-      
-      <h2>Pets Available for Adoption</h2>
-    <h3>Hi {user || 'there'}!</h3>
-   {this.state.adoptedPet && <h3>You adopted {this.state.adoptedPet}!</h3>}
-          <div className="people-queue">
-   {placeInLine > 0 && <p>Your place in line is: {placeInLine}</p>}
-    <p>People now in line: {peopleLine}</p>
-    <ol className='people__list'>
-        {people.map(person =>
-          <li key={person.id}>
-              {person}
-          
-          </li>
-        )}
-      </ol>
-        </div>
-     {userDisplay}
-      </section>
+
+
+      <div className="dogs-and_cats">
+        <article className="dogs">
+          <h4>Pups</h4>
+          <img src={dogImage} width="200" className="pet-photo" alt={dogImagedesc} />
+          <p>{currentDog.name}</p>
+          <p>Age:{' '}{currentCat.age}</p>
+          <p>Breed:{' '}{currentDog.breed}</p>
+          <p>Gender:{' '}{currentDog.gender}</p>
+          <p>Story:{' '}{currentDog.story}</p>
+
+        </article>
+        <article className='cats'>
+          <h4>Cats</h4>
+          <img src={catImage} width="200" className="pet-photo" alt={catImagedesc} />
+          <p>{currentCat.name}</p>
+          <p>Age:{' '}{currentCat.age}</p>
+          <p>Breed:{' '}{currentCat.breed}</p>
+          <p>Gender:{' '}{currentCat.gender}</p>
+          <p>Story:{' '}{currentCat.story}</p>
+
+        </article>
+      </div>
+
     )
   }
 }
-Adoption.defaultProps = {
+NotFrontofLine.defaultProps = {
   match: {},
 }
-Adoption.propTypes = {
+NotFrontofLine.propTypes = {
   props: PropTypes.shape({
     match: PropTypes.object,
   })

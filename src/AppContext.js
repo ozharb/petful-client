@@ -8,7 +8,8 @@ const AppContext = React.createContext({
     addPerson: () => {},
     adoptDog:() => {},
     adoptCat: () => {},
-    removePerson: () => {}
+    removePerson: () => {},
+    saveUser: () => {}
 })
 
 export default AppContext

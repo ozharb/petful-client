@@ -1,15 +1,13 @@
 import React from 'react'
 import config from '../config'
-import FrontofLine from '../FrontofLine/FrontofLine'
-import NotFrontofLine from '../NotFrontofLine/NotFrontofLine'
-import './Adoption.css'
+import './FrontofLine.css'
 import AppContext from '../AppContext'
 import PropTypes from 'prop-types';
 
 
-export default class Adoption extends React.Component {
+export default class FrontofLine extends React.Component {
   state = {
-    adoptedPet: ''
+    firstPerson: false
   };
 
   static defaultProps = {
@@ -17,17 +15,9 @@ export default class Adoption extends React.Component {
       params: {}
     }
   }
-  handleAdoptedpet = (petName) =>{
-    this.setState({
-      adoptedPet: petName
-    })
-  }
-
+ 
   adoptEvent = ()=>{
-   this.handlePersonOut()
- Math.floor(Math.random()*2) === 0
-    ? this.handleClickAdoptCat()
-    : this.handleClickAdoptDog()
+   this.handleNewPerson()
   }
 
 
@@ -98,7 +88,7 @@ export default class Adoption extends React.Component {
   }
   
   handleClickAdoptDog = () => {
-   
+    this.handlePersonOut()
 
     fetch(`${config.API_ENDPOINT}/pets/dog`, {
       method: 'DELETE',
@@ -112,13 +102,14 @@ export default class Adoption extends React.Component {
       })
       .then(() => {
         this.context.adoptDog()
+        this.props.handleAdoptedpet(this.currentDog.name)
       })
       .catch(error => {
         console.error({ error })
       })
   }
   handleClickAdoptCat = () => {
-   
+    this.handlePersonOut()
 
     fetch(`${config.API_ENDPOINT}/pets/cat`, {
       method: 'DELETE',
@@ -132,6 +123,7 @@ export default class Adoption extends React.Component {
       })
       .then(() => {
         this.context.adoptCat()
+        this.props.handleAdoptedpet(this.currentCat.name)
       })
       .catch(error => {
         console.error({ error })
@@ -140,67 +132,80 @@ export default class Adoption extends React.Component {
 
   static contextType = AppContext
 
-  // componentDidMount() {
+  componentDidMount() {
  
-  //   this.interval = setInterval(() => {
-  //   this.adoptEvent()
-  //   }, 5000)
+    this.interval = setInterval(() => {
+    this.adoptEvent()
+    }, 5000)
     
-  // }
-  // componentWillUnmount() {
-  //   clearInterval(this.interval)
-  // }
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
     people  = this.context.people
     user = this.context.user
    peopleLine = this.people.length;
-   placeInLine = this.people.findIndex(el=> el === this.user)+1
+   currentDog = {...this.context.dogs[0]}
+   currentCat = {...this.context.cats[0]}
 
   render() {
 
-    const { people = [], user = ''} = this.context
+    const { dogs = [], cats = [], people = [] } = this.context
     const peopleLine = people.length;
-    const placeInLine = people.findIndex(el=> el === user)+1
+    peopleLine >4 &&clearInterval(this.interval)
     
    
-    
-   const userDisplay =  placeInLine===1 
-    ? <FrontofLine handleAdoptedpet={this.handleAdoptedpet}/>
-    : <NotFrontofLine/>
+    let currentDog = {...dogs[0]}
+    let dogImage = currentDog.imageURL
+    let  dogImagedesc = currentDog.description
+
+    let currentCat = {...cats[0]}
+    let catImage = currentCat.imageURL
+    let  catImagedesc = currentCat.description
+
     
   
 
+    // const itemsForList = getItemsForList(items, listId)
 
    
  
 
     return (
-     
-      <section className='Adoption_Main'>
-      
-      <h2>Pets Available for Adoption</h2>
-    <h3>Hi {user || 'there'}!</h3>
-   {this.state.adoptedPet && <h3>You adopted {this.state.adoptedPet}!</h3>}
-          <div className="people-queue">
-   {placeInLine > 0 && <p>Your place in line is: {placeInLine}</p>}
-    <p>People now in line: {peopleLine}</p>
-    <ol className='people__list'>
-        {people.map(person =>
-          <li key={person.id}>
-              {person}
+      <>
+      <h3>You're up! Pick your new bestie!</h3>
+        <div className = "dogs-and_cats">
           
-          </li>
-        )}
-      </ol>
-        </div>
-     {userDisplay}
-      </section>
+        <article className="dogs">
+         
+          <h4>Pups</h4>
+          <img src={dogImage} width="200" className="pet-photo" alt={dogImagedesc} />
+          <p>{currentDog.name}</p> 
+    <p>Age:{' '}{currentCat.age}</p> 
+            <p>Breed:{' '}{currentDog.breed}</p> 
+            <p>Gender:{' '}{currentDog.gender}</p> 
+            <p>Story:{' '}{currentDog.story}</p> 
+            <button className = "adopt" onClick = {this.handleClickAdoptDog}>Adopt Me</button>
+        </article>
+        <article className='cats'>
+          <h4>Cats</h4>
+          <img src={catImage} width="200" className="pet-photo" alt={catImagedesc} />
+            <p>{currentCat.name}</p> 
+    <p>Age:{' '}{currentCat.age}</p> 
+            <p>Breed:{' '}{currentCat.breed}</p> 
+            <p>Gender:{' '}{currentCat.gender}</p> 
+            <p>Story:{' '}{currentCat.story}</p> 
+            <button className = "adopt" onClick = {this.handleClickAdoptCat}>Adopt Me</button>
+          </article>
+      </div>
+      </>
     )
   }
 }
-Adoption.defaultProps = {
+FrontofLine.defaultProps = {
   match: {},
 }
-Adoption.propTypes = {
+FrontofLine.propTypes = {
   props: PropTypes.shape({
     match: PropTypes.object,
   })

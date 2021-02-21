@@ -7,58 +7,62 @@ import AppContext from '../AppContext'
 
 
 export default class LandingPage extends Component {
-  state = { error: null,
+  state = {
+    error: null,
     registered: false
-   }
+  }
   static defaultProps = {
     history: {
       push: () => { },
     },
   }
+  handleLoginSuccess = () => {
+    const { history } = this.props
+    // window.localStorage.clear()
+    // setTimeout(() => {
+    //   history.go(0)
+    // }, 501);
+   
+      history.push('/adoption')
+    
+  }
   handleSubmit = e => {
     e.preventDefault()
     const newPerson = {
-        person_name: e.target['name'].value,
+      person_name: e.target['name'].value,
     }
     fetch(`${config.API_ENDPOINT}/people`,
-        {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify(newPerson)
-        })
-        .then(res => {
-            if (!res.ok) {
-                return res.json().then(e => Promise.reject(e))
-            }
-            return res.json()
-        })
-        .then(data => {
+      {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(newPerson)
+      })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(e => Promise.reject(e))
+        }
+        return res.json()
+      })
+      .then(data => {
 
-            this.context.addPerson(data.person_name)
-            const person_name = 'user'
-        window.localStorage.setItem(person_name, data.person_name)
+        this.context.addPerson(data.person_name)
         
-        })
-        .catch(error => {
-            console.error({ error })
-        })
-        const { history } = this.props
-  
-        
-            history.go(0)
-         
-           
-          history.push(`/adoption`)
-              
-         
+        // const person_name = 'user'
+        this.context.saveUser(data.person_name)
+       
+        this.handleLoginSuccess()
+      })
+      .catch(error => {
+        console.error({ error })
+      })
 
-}
+  }
 
-static contextType = AppContext
+  static contextType = AppContext
   render() {
-    const { dogs = [], cats = [], people = []} = this.context
+   
     return (
       <article className='LandingPage'>
 
@@ -69,7 +73,7 @@ static contextType = AppContext
         <h3> Where your next best friend awaits!</h3>
 
         <p>Get in line and look at the dogs and cats available for adoption as you wait</p>
-   <p><span role = 'img' aria-label= "cat-and-dog">🐶🐱</span></p>
+        <p><span role='img' aria-label="cat-and-dog">🐶🐱</span></p>
         <section className="app-features">
 
           <h3>Add your name below to get started!</h3>
@@ -91,24 +95,24 @@ static contextType = AppContext
 
 
           <p><em>"Woof" - FIFO dog</em></p>
-         
-      </section>
+
+        </section>
         <section>
           <h3>Add your name below to get in line and go to the adoption page</h3>
           <form
             onSubmit={this.handleSubmit}>
-          <input
-            name='name'
-            required
-            id='registration_name'
-           >
-          </input>
-          <button className="register-button"
-            type='submit'
-            to = {"/adoption"}>
-            Register
+            <input
+              name='name'
+              required
+              id='registration_name'
+            >
+            </input>
+            <button className="register-button"
+              type='submit'
+              to={"/adoption"}>
+              Register
         </button>
-        </form>
+          </form>
           <h3>Hurry, your best friend is waiting!</h3>
         </section>
       </ article>
