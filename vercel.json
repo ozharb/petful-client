@@ -7,7 +7,7 @@
       },
       {
         "src": "^/favicon.ico$",
-        "dest": "/favicon.ico"
+        "dest": "/favicon.png"
       },
       {
         "src": "^/manifest.json$",
