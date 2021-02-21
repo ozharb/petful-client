@@ -41,7 +41,7 @@ export default class NotFrontofLine extends React.Component {
     }
     ]
 
-    fetch(`${config.API_ENDPOINT}/people`,
+    fetch(`${config.REACT_APP_API_BASE}/people`,
       {
         method: 'POST',
         headers: {
@@ -70,7 +70,7 @@ export default class NotFrontofLine extends React.Component {
 
   handlePersonOut = () => {
 
-    fetch(`${config.API_ENDPOINT}/people`, {
+    fetch(`${config.REACT_APP_API_BASE}/people`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'
@@ -91,7 +91,7 @@ export default class NotFrontofLine extends React.Component {
   handleClickAdoptDog = () => {
 
 
-    fetch(`${config.API_ENDPOINT}/pets/dog`, {
+    fetch(`${config.REACT_APP_API_BASE}/pets/dog`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
@@ -111,7 +111,7 @@ export default class NotFrontofLine extends React.Component {
   handleClickAdoptCat = () => {
 
 
-    fetch(`${config.API_ENDPOINT}/pets/cat`, {
+    fetch(`${config.REACT_APP_API_BASE}/pets/cat`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',

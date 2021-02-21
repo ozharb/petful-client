@@ -67,7 +67,7 @@ export default class LandingPage extends Component {
       <article className='LandingPage'>
 
         <header role="banner">
-          <h2>FIFO</h2>
+          <h2>Fifo</h2>
           <p>Pet Adoption</p>
         </header>
         <h3> Where your next best friend awaits!</h3>

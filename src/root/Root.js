@@ -17,9 +17,9 @@ class Root extends Component {
   componentDidMount() {
     Promise.all([
 
-      fetch(`${config.API_ENDPOINT}/people`),
-      fetch(`${config.API_ENDPOINT}/pets/dogs`),
-      fetch(`${config.API_ENDPOINT}/pets/cats`)
+      fetch(`${config.REACT_APP_API_BASE}/people`),
+      fetch(`${config.REACT_APP_API_BASE}/pets/dogs`),
+      fetch(`${config.REACT_APP_API_BASE}/pets/cats`)
     ])
       .then(([peopleRes, dogsRes, catsRes]) => {
         if (!peopleRes.ok)

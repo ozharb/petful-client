@@ -40,7 +40,7 @@ export default class FrontofLine extends React.Component {
     }
   ]
 
-    fetch(`${config.API_ENDPOINT}/people`,
+    fetch(`${config.REACT_APP_API_BASE}/people`,
       {
         method: 'POST',
         headers: {
@@ -69,7 +69,7 @@ export default class FrontofLine extends React.Component {
 
   handlePersonOut = () =>{
     
-    fetch(`${config.API_ENDPOINT}/people`, {
+    fetch(`${config.REACT_APP_API_BASE}/people`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'
@@ -90,7 +90,7 @@ export default class FrontofLine extends React.Component {
   handleClickAdoptDog = () => {
     this.handlePersonOut()
 
-    fetch(`${config.API_ENDPOINT}/pets/dog`, {
+    fetch(`${config.REACT_APP_API_BASE}/pets/dog`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
@@ -111,7 +111,7 @@ export default class FrontofLine extends React.Component {
   handleClickAdoptCat = () => {
     this.handlePersonOut()
 
-    fetch(`${config.API_ENDPOINT}/pets/cat`, {
+    fetch(`${config.REACT_APP_API_BASE}/pets/cat`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
@@ -163,13 +163,6 @@ export default class FrontofLine extends React.Component {
     let catImage = currentCat.imageURL
     let  catImagedesc = currentCat.description
 
-    
-  
-
-    // const itemsForList = getItemsForList(items, listId)
-
-   
- 
 
     return (
       <>
