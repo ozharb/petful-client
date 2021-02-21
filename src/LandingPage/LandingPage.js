@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 import './LandingPage.css'
 import config from '../config'
-// import { Link } from "react-router-dom"
 import main from './images/petful-1.jpg'
 import AppContext from '../AppContext'
 
 
 export default class LandingPage extends Component {
-  state = {
-    error: null,
-    registered: false
-  }
+
   static defaultProps = {
     history: {
       push: () => { },
@@ -18,9 +14,9 @@ export default class LandingPage extends Component {
   }
   handleLoginSuccess = () => {
     const { history } = this.props
- 
-      history.push('/adoption')
-    
+
+    history.push('/adoption')
+
   }
   handleSubmit = e => {
     e.preventDefault()
@@ -44,10 +40,9 @@ export default class LandingPage extends Component {
       .then(data => {
 
         this.context.addPerson(data.person_name)
-        
-        // const person_name = 'user'
+
         this.context.saveUser(data.person_name)
-       
+
         this.handleLoginSuccess()
       })
       .catch(error => {
@@ -58,7 +53,7 @@ export default class LandingPage extends Component {
 
   static contextType = AppContext
   render() {
-   
+
     return (
       <article className='LandingPage'>
 
@@ -78,7 +73,7 @@ export default class LandingPage extends Component {
           <ul>
             <li>Add your name to get in line</li>
             <li>While you wait, you can view the dogs and cats available for adoption</li>
-            <li>Only those ahead of you may adopt a pet.</li>
+            <li>Only the first person in line may adopt a pet.</li>
             <li>Once a pet is adopted, they will be removed from the list of pets you can see while you wait.</li>
             <li>When you get to the top of the list it's your turn to pick a pet!</li>
             <li>Once it's your turn, you may pick either the dog or cat that's been waiting the longest for a home</li>
@@ -86,12 +81,8 @@ export default class LandingPage extends Component {
           <p>Maybe you want a dog, maybe a cat. Who knows!</p>
         </section>
         <section>
-
           <h3>They're all great</h3>
-
-
           <p><em>"Woof" - FIFO dog</em></p>
-
         </section>
         <section>
           <h3>Add your name below to get in line and go to the adoption page</h3>

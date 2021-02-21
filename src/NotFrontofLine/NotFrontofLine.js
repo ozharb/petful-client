@@ -12,6 +12,7 @@ export default class NotFrontofLine extends React.Component {
       params: {}
     }
   }
+//randomly chooses either a pet or cat to remove from queue  and removes a person from line
 
   adoptEvent = () => {
     this.handlePersonOut()
@@ -21,6 +22,7 @@ export default class NotFrontofLine extends React.Component {
       : this.handleClickAdoptDog()
   }
 
+//Add new people to line once user has adopted pet
 
   handleNewPerson = () => {
 
