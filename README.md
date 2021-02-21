@@ -1,4 +1,33 @@
-# Getting Started with Create React App
+# Fifo Pet Adoption 
+
+- Add your name to get in line
+- While you wait, you can view the dogs and cats available for adoption
+- Only those ahead of you may adopt a pet.
+- Once a pet is adopted, they will be removed from the list of pets you can see while you wait.
+- When you get to the top of the list it's your turn to pick a pet!
+- Once it's your turn, you may pick either the dog or cat that's been waiting the longest for a home
+
+This repo is the front-end client, built in React.  You can see the app live at [https://petful-client-ozharb.vercel.app/]
+
+The repo for the backend end server I've developed is available at https://github.com/ozharb/petful-server-oz.git and is currently deployed on Heroku.
+
+
+## Technology
+
+#### Front End
+
+* React
+  * Create React App
+  * React Router
+* HTML5
+* CSS3 (scratch - no frameworks)
+
+
+#### Production
+
+* Deployed via Vercel
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

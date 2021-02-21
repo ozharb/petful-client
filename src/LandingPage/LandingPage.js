@@ -18,11 +18,7 @@ export default class LandingPage extends Component {
   }
   handleLoginSuccess = () => {
     const { history } = this.props
-    // window.localStorage.clear()
-    // setTimeout(() => {
-    //   history.go(0)
-    // }, 501);
-   
+ 
       history.push('/adoption')
     
   }
@@ -31,7 +27,7 @@ export default class LandingPage extends Component {
     const newPerson = {
       person_name: e.target['name'].value,
     }
-    fetch(`${config.API_ENDPOINT}/people`,
+    fetch(`${config.REACT_APP_API_BASE}/people`,
       {
         method: 'POST',
         headers: {
@@ -78,15 +74,15 @@ export default class LandingPage extends Component {
 
           <h3>Add your name below to get started!</h3>
           <img src={main} width="200" className="app-screenshot home" alt="cartoon-dog" />
+          <p>The adoption process:</p>
           <ul>
             <li>Add your name to get in line</li>
             <li>While you wait, you can view the dogs and cats available for adoption</li>
             <li>Only those ahead of you may adopt a pet.</li>
             <li>Once a pet is adopted, they will be removed from the list of pets you can see while you wait.</li>
             <li>When you get to the top of the list it's your turn to pick a pet!</li>
-            <li>Once it your turn, you may either pick the dog or cat that's been waiting the longest for a home</li>
+            <li>Once it's your turn, you may pick either the dog or cat that's been waiting the longest for a home</li>
           </ul>
-          {/* <img src={allLists} width="200" className="app-screenshot home" alt="app-screesnshot-home-page" /> */}
           <p>Maybe you want a dog, maybe a cat. Who knows!</p>
         </section>
         <section>
